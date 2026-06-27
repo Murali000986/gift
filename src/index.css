@@ -1,0 +1,523 @@
+/* ============================================================
+   THE ENCHANTED FOREST — Global Design System
+   ============================================================ */
+
+:root {
+  /* Color Palette */
+  --color-midnight: #050d1a;
+  --color-deep-night: #0a1628;
+  --color-night: #0f2040;
+  --color-dusk: #1a1a3e;
+  --color-twilight: #2d1b69;
+  --color-forest-deep: #0d1f0d;
+  --color-forest: #0f2a0f;
+  --color-forest-mid: #1a4a1a;
+  --color-forest-light: #2d6a2d;
+  --color-dawn: #ff8c42;
+  --color-sunrise: #ffb347;
+  --color-golden: #ffd700;
+  --color-rose: #ff6b8a;
+  --color-lavender: #b784f0;
+  --color-sky-blue: #87ceeb;
+  --color-crystal: #a8d8ea;
+  --color-star: #fff8dc;
+  --color-firefly: #aaff55;
+  --color-butterfly-1: #ff69b4;
+  --color-butterfly-2: #da70d6;
+  --color-butterfly-3: #9370db;
+  --color-petal: #ffb6c1;
+  --color-leaf: #90ee90;
+  --color-magic: #c8a8f0;
+  
+  /* Typography */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Lato', system-ui, sans-serif;
+  --font-script: 'Dancing Script', cursive;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Borders & Radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 2rem;
+  --radius-full: 9999px;
+
+  /* Shadows & Glows */
+  --glow-star: 0 0 6px #fff8dc, 0 0 20px #fff8dc88, 0 0 40px #fff8dc44;
+  --glow-firefly: 0 0 4px #aaff55, 0 0 12px #aaff5588;
+  --glow-magic: 0 0 10px #c8a8f0, 0 0 30px #c8a8f088, 0 0 60px #c8a8f044;
+  --glow-crystal: 0 0 15px #a8d8ea, 0 0 40px #a8d8ea88;
+  --glow-golden: 0 0 20px #ffd700, 0 0 50px #ffd70066;
+  --glow-butterfly: 0 0 8px #ff69b4, 0 0 20px #ff69b488;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-med: 0.4s ease;
+  --transition-slow: 0.8s ease;
+  --transition-magic: 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================================
+   Reset & Base
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-midnight);
+  color: #f0e6ff;
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  position: relative;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+/* ============================================================
+   Page Layout
+   ============================================================ */
+
+.page {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-canvas-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.page-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-8);
+}
+
+/* ============================================================
+   Typography
+   ============================================================ */
+
+.title-magical {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+  font-style: italic;
+  color: var(--color-star);
+  text-shadow: var(--glow-star);
+  line-height: 1.2;
+}
+
+.subtitle-magical {
+  font-family: var(--font-script);
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  color: var(--color-magic);
+  text-shadow: 0 0 20px var(--color-magic);
+  margin-top: var(--space-4);
+}
+
+.body-text {
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  font-weight: 300;
+  color: #d4c9ff;
+  line-height: 1.8;
+  max-width: 600px;
+}
+
+.letter-text {
+  font-family: var(--font-script);
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  color: #ffeedd;
+  line-height: 2;
+  text-shadow: 0 0 10px rgba(255, 200, 100, 0.3);
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+
+.btn-magic {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-8);
+  background: linear-gradient(135deg, rgba(200, 168, 240, 0.15), rgba(168, 216, 234, 0.1));
+  border: 1px solid rgba(200, 168, 240, 0.4);
+  border-radius: var(--radius-full);
+  color: var(--color-magic);
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(200, 168, 240, 0.15), inset 0 1px 0 rgba(255,255,255,0.1);
+  transition: all var(--transition-med);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-magic:hover {
+  background: linear-gradient(135deg, rgba(200, 168, 240, 0.3), rgba(168, 216, 234, 0.2));
+  border-color: rgba(200, 168, 240, 0.8);
+  box-shadow: var(--glow-magic);
+  transform: translateY(-2px) scale(1.02);
+  color: #fff;
+}
+
+.btn-magic:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ============================================================
+   Message Crystal / Popup
+   ============================================================ */
+
+.crystal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 13, 26, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.crystal-card {
+  position: relative;
+  max-width: 480px;
+  width: 90%;
+  padding: var(--space-8) var(--space-8);
+  background: linear-gradient(
+    135deg,
+    rgba(168, 216, 234, 0.08),
+    rgba(200, 168, 240, 0.08)
+  );
+  border: 1px solid rgba(168, 216, 234, 0.3);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--glow-crystal), 0 20px 60px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.crystal-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-4);
+  filter: drop-shadow(0 0 20px currentColor);
+}
+
+.crystal-message {
+  font-family: var(--font-script);
+  font-size: 1.4rem;
+  color: #f0f8ff;
+  line-height: 1.8;
+  text-shadow: 0 0 15px rgba(168, 216, 234, 0.5);
+}
+
+.crystal-close {
+  margin-top: var(--space-6);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(200, 168, 240, 0.4);
+  color: var(--color-magic);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  background: rgba(200, 168, 240, 0.1);
+}
+
+.crystal-close:hover {
+  background: rgba(200, 168, 240, 0.3);
+  box-shadow: var(--glow-magic);
+  transform: scale(1.1);
+}
+
+/* ============================================================
+   Progress Orb
+   ============================================================ */
+
+.progress-orb {
+  position: fixed;
+  top: var(--space-6);
+  left: var(--space-6);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  background: rgba(10, 22, 40, 0.8);
+  border: 1px solid rgba(200, 168, 240, 0.3);
+  border-radius: var(--radius-full);
+  backdrop-filter: blur(10px);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--color-magic);
+}
+
+.progress-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(200, 168, 240, 0.3);
+  transition: all var(--transition-med);
+}
+
+.progress-dot.found {
+  background: var(--color-magic);
+  box-shadow: var(--glow-magic);
+}
+
+/* ============================================================
+   Audio Toggle
+   ============================================================ */
+
+.audio-toggle {
+  position: fixed;
+  top: var(--space-6);
+  right: var(--space-6);
+  z-index: 500;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(10, 22, 40, 0.8);
+  border: 1px solid rgba(200, 168, 240, 0.3);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: var(--color-magic);
+  transition: all var(--transition-med);
+  cursor: pointer;
+}
+
+.audio-toggle:hover {
+  border-color: var(--color-magic);
+  box-shadow: var(--glow-magic);
+  transform: scale(1.1);
+}
+
+/* ============================================================
+   Clickable Objects
+   ============================================================ */
+
+.clickable-obj {
+  cursor: pointer;
+  position: absolute;
+  z-index: 20;
+  filter: drop-shadow(0 0 6px currentColor);
+  transition: filter var(--transition-fast), transform var(--transition-fast);
+  user-select: none;
+}
+
+.clickable-obj:hover {
+  filter: drop-shadow(0 0 15px currentColor) brightness(1.3);
+  transform: scale(1.15);
+}
+
+.clickable-obj.found {
+  opacity: 0.5;
+  filter: grayscale(0.5);
+  pointer-events: none;
+}
+
+/* ============================================================
+   Animations / Keyframes
+   ============================================================ */
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.7); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-2deg); transform-origin: bottom center; }
+  50% { transform: rotate(2deg); transform-origin: bottom center; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: var(--glow-magic); }
+  50% { box-shadow: 0 0 20px #c8a8f0, 0 0 50px #c8a8f0aa, 0 0 80px #c8a8f066; }
+}
+
+@keyframes drift-cloud {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(120vw); }
+}
+
+@keyframes fall-petal {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes bloom {
+  0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+  60% { transform: scale(1.15) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-18px) rotate(1deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes rainbow-arc {
+  0% { opacity: 0; transform: scaleX(0); }
+  100% { opacity: 0.8; transform: scaleX(1); }
+}
+
+@keyframes sunrise-sky {
+  0% { background: linear-gradient(180deg, #050d1a 0%, #0a1628 50%, #0f2040 100%); }
+  25% { background: linear-gradient(180deg, #1a0a2e 0%, #2d1b69 40%, #4a1a6e 100%); }
+  50% { background: linear-gradient(180deg, #4a1a2e 0%, #8b2252 40%, #c44569 100%); }
+  75% { background: linear-gradient(180deg, #e8620a 0%, #f4932a 40%, #ffb347 100%); }
+  100% { background: linear-gradient(180deg, #87ceeb 0%, #ffe0b2 60%, #fff8dc 100%); }
+}
+
+@keyframes shooting-star {
+  0% { transform: translateX(0) translateY(0) scaleX(1); opacity: 1; }
+  100% { transform: translateX(300px) translateY(150px) scaleX(3); opacity: 0; }
+}
+
+@keyframes butterfly-wings {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(0.2); }
+}
+
+@keyframes bunny-run {
+  0% { left: -10%; }
+  100% { left: 110%; }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.4) saturate(1.2); }
+}
+
+/* ============================================================
+   Utility
+   ============================================================ */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+.no-select {
+  user-select: none;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.absolute-fill {
+  position: absolute;
+  inset: 0;
+}
+
+/* Page transition wrapper */
+.page-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Scrollable page */
+.page-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
