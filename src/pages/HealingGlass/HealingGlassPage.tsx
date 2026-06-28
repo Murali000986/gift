@@ -16,6 +16,7 @@ type Phase =
   | 'questions'
   | 'final-question'
   | 'final-answer'
+  | 'kabini-door'
   | 'ending';
 
 // ─── Fragment Data ─────────────────────────────────────────────────────────────
@@ -747,7 +748,7 @@ const HealingGlassPage: React.FC = () => {
   const handleFinalAnswer = (response: string) => {
     setFinalAnswer(response);
     setPhase('final-answer');
-    setTimeout(() => setPhase('ending'), 5000);
+    setTimeout(() => setPhase('kabini-door'), 5000);
   };
 
   const bgStyle: React.CSSProperties = {
@@ -1315,6 +1316,194 @@ const HealingGlassPage: React.FC = () => {
         )}
       </AnimatePresence>
 
+      {/* ── PHASE: KABINI DOOR (hidden chapter reveal) ── */}
+      <AnimatePresence>
+        {phase === 'kabini-door' && (
+          <motion.div
+            key="kabini-door"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            style={{
+              position: 'fixed', inset: 0, zIndex: 100,
+              background: 'radial-gradient(ellipse at 50% 60%, #1a0a3a 0%, #050310 100%)',
+              display: 'flex', flexDirection: 'column',
+              alignItems: 'center', justifyContent: 'center',
+              padding: '2rem',
+            }}
+          >
+            {/* Stars */}
+            {[...Array(80)].map((_, i) => (
+              <motion.div key={i}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: Math.random() * 0.8 + 0.1 }}
+                transition={{ delay: Math.random() * 2, duration: 0.6 }}
+                style={{
+                  position: 'absolute',
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  width: Math.random() * 2.5 + 0.5,
+                  height: Math.random() * 2.5 + 0.5,
+                  borderRadius: '50%',
+                  background: '#fff8dc',
+                  boxShadow: '0 0 4px #fff8dc',
+                  pointerEvents: 'none',
+                }}
+              />
+            ))}
+
+            {/* Hint text */}
+            <motion.p
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 1 }}
+              style={{
+                fontFamily: 'var(--font-script)',
+                fontSize: 'clamp(0.9rem, 2vw, 1.2rem)',
+                color: 'rgba(200,168,240,0.5)',
+                marginBottom: '0.5rem',
+                fontStyle: 'italic',
+              }}
+            >
+              The screen doesn't close...
+            </motion.p>
+
+            {/* "One last place remains..." */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0.8, 1] }}
+              transition={{ delay: 2, duration: 2 }}
+              style={{
+                fontFamily: 'var(--font-script)',
+                fontSize: 'clamp(1.1rem, 2.8vw, 1.6rem)',
+                color: '#ffd700',
+                textShadow: '0 0 20px #ffd70066',
+                marginBottom: '2.5rem',
+                fontStyle: 'italic',
+                letterSpacing: '0.05em',
+              }}
+            >
+              One last place remains...
+            </motion.p>
+
+            {/* Glowing Door */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.4, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: 3.5, duration: 1.2, type: 'spring', damping: 12 }}
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+            >
+              <motion.div
+                onClick={() => navigate('/kabini')}
+                animate={{
+                  boxShadow: [
+                    '0 0 30px rgba(100,50,200,0.4), 0 0 60px rgba(200,168,240,0.2)',
+                    '0 0 55px rgba(100,50,200,0.8), 0 0 110px rgba(200,168,240,0.45)',
+                    '0 0 30px rgba(100,50,200,0.4), 0 0 60px rgba(200,168,240,0.2)',
+                  ],
+                }}
+                transition={{ duration: 2.5, repeat: Infinity }}
+                whileHover={{
+                  scale: 1.07,
+                  boxShadow: '0 0 80px rgba(200,168,240,0.9), 0 0 130px rgba(100,50,200,0.6)',
+                }}
+                whileTap={{ scale: 0.96 }}
+                style={{
+                  position: 'relative',
+                  width: 'clamp(100px, 16vw, 150px)',
+                  height: 'clamp(160px, 26vw, 240px)',
+                  cursor: 'pointer',
+                  borderRadius: '50% 50% 4px 4px / 28% 28% 4px 4px',
+                  background: 'linear-gradient(180deg, rgba(80,30,160,0.9) 0%, rgba(40,10,100,0.95) 100%)',
+                  border: '2px solid rgba(200,168,240,0.65)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  overflow: 'hidden',
+                }}
+              >
+                {/* Inner glow */}
+                <motion.div
+                  animate={{ opacity: [0.3, 0.9, 0.3] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  style={{
+                    position: 'absolute', inset: 0,
+                    background: 'radial-gradient(ellipse at 50% 25%, rgba(200,168,240,0.35), transparent 70%)',
+                  }}
+                />
+                {/* Fireflies inside */}
+                {[...Array(6)].map((_, i) => (
+                  <motion.div key={i}
+                    animate={{
+                      y: [15, -18, 15],
+                      x: [(i - 2.5) * 10, (2.5 - i) * 10, (i - 2.5) * 10],
+                      opacity: [0, 1, 0],
+                    }}
+                    transition={{ duration: 2.2 + i * 0.3, repeat: Infinity, delay: i * 0.45 }}
+                    style={{
+                      position: 'absolute',
+                      width: 3, height: 3, borderRadius: '50%',
+                      background: '#aaff88',
+                      boxShadow: '0 0 8px #aaff88',
+                    }}
+                  />
+                ))}
+                {/* Doorknob */}
+                <div style={{
+                  position: 'absolute',
+                  right: '20%', top: '52%',
+                  width: 9, height: 9, borderRadius: '50%',
+                  background: '#ffd700',
+                  boxShadow: '0 0 10px #ffd700',
+                }} />
+                {/* Door panel */}
+                <div style={{
+                  position: 'absolute',
+                  top: '14%', left: '14%', right: '14%', bottom: '28%',
+                  border: '1px solid rgba(200,168,240,0.25)',
+                  borderRadius: '30% 30% 2px 2px / 14% 14% 2px 2px',
+                }} />
+              </motion.div>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 0.7, 0.5, 0.8] }}
+                transition={{ delay: 5, duration: 2, repeat: Infinity, repeatType: 'reverse' }}
+                style={{
+                  fontFamily: 'var(--font-script)',
+                  fontSize: '0.9rem',
+                  color: 'rgba(200,168,240,0.6)',
+                  marginTop: '1.2rem',
+                  fontStyle: 'italic',
+                }}
+              >
+                click to enter ✦
+              </motion.p>
+            </motion.div>
+
+            {/* Skip → go to The End */}
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 7 }}
+              onClick={() => setPhase('ending')}
+              style={{
+                marginTop: '3rem',
+                background: 'none',
+                border: '1px solid rgba(200,168,240,0.15)',
+                borderRadius: '2rem',
+                padding: '0.45rem 1.4rem',
+                color: 'rgba(200,168,240,0.35)',
+                fontFamily: 'var(--font-serif)',
+                fontStyle: 'italic',
+                fontSize: '0.8rem',
+                cursor: 'pointer',
+              }}
+            >
+              Skip → The End
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* ── PHASE: ENDING ── */}
       <AnimatePresence>
         {phase === 'ending' && (
@@ -1363,7 +1552,7 @@ const HealingGlassPage: React.FC = () => {
                 marginBottom: '2.5rem', fontStyle: 'italic',
               }} />
 
-              {/* Fade to white */}
+              {/* Fade to white — original ending */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

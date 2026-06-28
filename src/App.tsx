@@ -10,6 +10,7 @@ const LakePage = lazy(() => import('./pages/ButterflyLake/LakePage'));
 const ConstellationPage = lazy(() => import('./pages/ConstellationSky/ConstellationPage'));
 const SunrisePage = lazy(() => import('./pages/Sunrise/SunrisePage'));
 const HealingGlassPage = lazy(() => import('./pages/HealingGlass/HealingGlassPage'));
+const KabiniWorldPage = lazy(() => import('./pages/KabiniWorld/KabiniWorldPage'));
 
 // Page transition wrapper
 const pageVariants = {
@@ -63,6 +64,7 @@ const AnimatedRoutes: React.FC = () => {
             <Route path="/constellation" element={<ConstellationPage />} />
             <Route path="/sunrise" element={<SunrisePage />} />
             <Route path="/healing" element={<HealingGlassPage />} />
+            <Route path="/kabini" element={<KabiniWorldPage />} />
           </Routes>
         </Suspense>
       </motion.div>
