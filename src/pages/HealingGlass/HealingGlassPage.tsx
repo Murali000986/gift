@@ -13,9 +13,8 @@ type Phase =
   | 'collecting'
   | 'reassembling'
   | 'friendship'
-  | 'questions'
-  | 'final-question'
-  | 'final-answer'
+  | 'story-question'
+  | 'story-butterfly'
   | 'kabini-door'
   | 'ending';
 
@@ -72,59 +71,83 @@ const FRAGMENTS = [
   },
 ];
 
-// ─── Question Data ─────────────────────────────────────────────────────────────
-const QUESTIONS = [
-  {
-    q: 'Who got confused more often?',
-    options: ['Me 😅', 'You 😂', 'Both equally 🤷'],
-    responses: [
-      'Honestly? That tracks. The confusion was kind of adorable though. 🌸',
-      'Ha! Not surprised. But somehow it always worked out. ✨',
-      'A perfect pair of chaos. Somehow you both still managed to figure things out! 🦋',
-    ],
-  },
-  {
-    q: 'Who overthinks more?',
-    options: ['Me 🧠', 'You 🤔', 'We\'re the same person 😭'],
-    responses: [
-      'At least your overthinking led to some great conversations. 💜',
-      'Overthinking is just caring a lot in disguise. So... it\'s okay. 🌙',
-      'Two overthinkers who somehow made it work. Impressive honestly. ⭐',
-    ],
-  },
-  {
-    q: 'Who would get lost first in this forest?',
-    options: ['Me, obviously 😂', 'You, 100% 🌲', 'We\'d get lost together 🗺️'],
-    responses: [
-      'The forest would have found you eventually. It always does. 🦋',
-      'Getting lost together would\'ve been the best adventure. 🌸',
-      'Getting lost together sounds like the best kind of adventure. 🌙',
-    ],
-  },
-  {
-    q: 'Rate this enchanted forest ✨',
-    options: ['10/10 🌟', '11/10 🔥', 'Off the charts 🚀'],
-    responses: [
-      'The forest smiles. It was made for someone worth it. 💜',
-      'You deserve an 11/10 kind of life. Don\'t settle for less. ⭐',
-      'You are off the charts too. Just so you know. 🦋',
-    ],
-  },
-  {
-    q: 'How many butterflies did you miss?',
-    options: ['A few 🦋', 'Many 🦋🦋', 'I caught them all! 🏆'],
-    responses: [
-      'The ones you missed are still out there, flying for you. 🌸',
-      'They\'ll come back. Butterflies always do. 💜',
-      'Of course you did. You notice things others don\'t. ✨',
-    ],
-  },
+// ─── Story Text Data ─────────────────────────────────────────────────────────────
+const STORY_QUESTION_TEXT = [
+  "There’s one thing I always told myself I would never ask you.",
+  "But honestly, I couldn’t keep it inside forever.",
+  "So I’m asking it here, quietly, one last time.",
+  "Did all of this mean something to you too?",
+  "Did our conversations, our laughs, our little memories… matter to you the way they mattered to me?",
+  "Sometimes I wondered if I meant nothing.",
+  "Sometimes I wondered if letting me go was easy.",
+  "But maybe I’ll never fully know the answer.",
+  "And that’s okay.",
+  "I’m not asking this to make you feel bad.",
+  "I’m only saying it because it was something my heart carried silently for a long time.",
+  "No matter what the answer is,",
+  "the memories were real to me.",
+  "The comfort was real.",
+  "The laughter was real.",
+  "And I’m grateful for the chapter we had."
 ];
 
-const FINAL_OPTIONS = [
-  { label: '🌸 Maybe We\'ll Make New Memories', response: 'Maybe is a beautiful word. It holds so much possibility. Whatever happens next, this chapter mattered. And so do you. 💜' },
-  { label: '🦋 Let\'s See What The Future Brings', response: 'The future is unwritten. But you\'ve already proven you can walk through dark forests and still find the light. ✨' },
-  { label: '🌙 Only Time Knows', response: 'And time is gentle with the things worth keeping. Whatever time brings, this was real. And real things don\'t fully disappear. 🌙' },
+const BUTTERFLY_STORY_TEXT = [
+  "# The Boy, The Butterfly, and The Forest",
+  "Once upon a time, there was a boy who carried too many thoughts.",
+  "His mind was loud.",
+  "His heart was tired.",
+  "And some days, he felt like he was walking through a forest without knowing where the path would lead.",
+  "One day, while wandering through that forest, he noticed a butterfly.",
+  "It wasn't the biggest butterfly.",
+  "It wasn't the brightest.",
+  "But somehow, it made the forest feel a little less lonely.",
+  "The butterfly didn't know it.",
+  "It was just being itself.",
+  "Flying around.",
+  "Talking about random things.",
+  "Laughing at silly jokes.",
+  "Sharing little pieces of its day.",
+  "But every time it appeared, the forest felt lighter.",
+  "The boy laughed more.",
+  "Smiled more.",
+  "And for a while, he forgot about the storms he had been carrying.",
+  "Days passed.",
+  "The butterfly and the boy explored different parts of the forest.",
+  "They found stars.",
+  "Collected memories.",
+  "Shared dreams.",
+  "Talked about the future.",
+  "And discovered that even ordinary moments could become beautiful memories.",
+  "Sometimes they got lost.",
+  "Sometimes they disagreed.",
+  "Sometimes the weather in the forest became cloudy.",
+  "But even cloudy days had their own kind of beauty.",
+  "As time passed, the butterfly didn't stay beside the boy every moment.",
+  "Sometimes it flew elsewhere.",
+  "Sometimes it disappeared for a while.",
+  "And sometimes the forest felt quiet again.",
+  "But the boy learned something important.",
+  "The butterfly was never meant to carry him through the forest.",
+  "It simply reminded him that the forest wasn't as dark as he thought.",
+  "Years from now, the boy might forget some conversations.",
+  "He might forget certain days.",
+  "But he would always remember one thing.",
+  "A butterfly once flew into his forest.",
+  "And because of that, the journey became brighter.",
+  "The butterfly taught him that small moments matter.",
+  "A simple laugh matters.",
+  "A simple \"How was your day?\" matters.",
+  "A simple act of kindness matters.",
+  "And sometimes, the people who change our lives the most don't do it with grand gestures.",
+  "They do it by simply being themselves.",
+  "So the boy continued walking.",
+  "The butterfly continued flying.",
+  "And the forest continued growing.",
+  "Not because every story lasts forever.",
+  "But because every good story leaves behind a little light.",
+  "And honestly?",
+  "That light is beautiful.",
+  "🦋"
 ];
 
 // ─── Floating Particle Component ──────────────────────────────────────────────
@@ -533,118 +556,7 @@ const MemoryOverlay: React.FC<{ fragment: typeof FRAGMENTS[0]; onClose: () => vo
   );
 };
 
-// ─── Question Card ─────────────────────────────────────────────────────────────
-const QuestionCard: React.FC<{
-  q: typeof QUESTIONS[0]; index: number; onAnswer: (response: string) => void;
-}> = ({ q, index, onAnswer }) => {
-  const [flipped, setFlipped] = useState(false);
-  const [answered, setAnswered] = useState(false);
-  const [selectedResponse, setSelectedResponse] = useState('');
 
-  const handleAnswer = (i: number) => {
-    if (answered) return;
-    setAnswered(true);
-    setSelectedResponse(q.responses[i]);
-    setTimeout(() => onAnswer(q.responses[i]), 1500);
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 60, rotateX: -30 }}
-      animate={{ opacity: 1, y: 0, rotateX: 0 }}
-      transition={{ delay: index * 0.1, type: 'spring', damping: 15 }}
-      style={{ perspective: 1000 }}
-    >
-      <motion.div
-        onClick={() => !flipped && setFlipped(true)}
-        animate={{ rotateY: flipped ? 180 : 0 }}
-        transition={{ duration: 0.6 }}
-        style={{
-          width: 'min(340px, 88vw)',
-          height: answered ? 260 : 280, // Fixed height to prevent collapse since children are absolute
-          cursor: flipped ? 'default' : 'pointer',
-          transformStyle: 'preserve-3d',
-          position: 'relative',
-        }}
-      >
-        {/* Front */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          backfaceVisibility: 'hidden',
-          background: 'rgba(20,10,40,0.85)',
-          border: '1px solid rgba(200,168,240,0.3)',
-          borderRadius: '1.2rem',
-          padding: '1.5rem',
-          backdropFilter: 'blur(12px)',
-          boxShadow: '0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(200,168,240,0.1)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center'
-        }}>
-          <p style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
-            color: '#fff8dc',
-            textShadow: '0 0 10px rgba(255,248,220,0.3)',
-          }}>
-            🃏 Tap to reveal...
-          </p>
-        </div>
-
-        {/* Back */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          backfaceVisibility: 'hidden',
-          transform: 'rotateY(180deg)',
-          background: 'rgba(20,10,40,0.85)',
-          border: '1px solid rgba(200,168,240,0.3)',
-          borderRadius: '1.2rem',
-          padding: '1.5rem',
-          backdropFilter: 'blur(12px)',
-          boxShadow: '0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(200,168,240,0.1)',
-          display: 'flex', flexDirection: 'column',
-          justifyContent: 'center'
-        }}>
-          <p style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
-            color: '#fff8dc',
-            marginBottom: '1.2rem', lineHeight: 1.5,
-            textShadow: '0 0 10px rgba(255,248,220,0.3)',
-          }}>
-            {q.q}
-          </p>
-          {!answered && q.options.map((opt, i) => (
-            <motion.button key={i}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 + i * 0.12 }}
-              onClick={(e) => { e.stopPropagation(); handleAnswer(i); }}
-              whileHover={{ scale: 1.04, x: 4 }}
-              style={{
-                display: 'block', width: '100%', marginBottom: '0.5rem',
-                background: 'rgba(200,168,240,0.1)',
-                border: '1px solid rgba(200,168,240,0.3)',
-                borderRadius: '0.8rem', padding: '0.6rem 1rem',
-                color: '#c8a8f0', fontFamily: 'var(--font-serif)',
-                fontSize: '0.95rem', cursor: 'pointer', textAlign: 'left',
-                transition: 'all 0.2s',
-              }}
-            >
-              {opt}
-            </motion.button>
-          ))}
-          {answered && (
-            <motion.p
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-              style={{ color: '#ffd700', fontStyle: 'italic', fontSize: '0.95rem', lineHeight: 1.6 }}
-            >
-              {selectedResponse}
-            </motion.p>
-          )}
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-};
 
 // ─── Typewriter Text ───────────────────────────────────────────────────────────
 const TypewriterText: React.FC<{ text: string; delay?: number; style?: React.CSSProperties }> = ({ text, delay = 0, style }) => {
@@ -687,8 +599,6 @@ const HealingGlassPage: React.FC = () => {
   const [phase, setPhase] = useState<Phase>('fade-in');
   const [collectedFragments, setCollectedFragments] = useState<Set<number>>(new Set());
   const [activeMemory, setActiveMemory] = useState<number | null>(null);
-  const [questionIndex, setQuestionIndex] = useState(0);
-  const [finalAnswer, setFinalAnswer] = useState('');
   const [shakeScreen, setShakeScreen] = useState(false);
   const [burstParticles, setBurstParticles] = useState(false);
   const pageRef = useRef<HTMLDivElement>(null);
@@ -735,21 +645,7 @@ const HealingGlassPage: React.FC = () => {
     }
   }, [activeMemory, collectedFragments]);
 
-  const handleQuestionAnswered = useCallback(() => {
-    setTimeout(() => {
-      if (questionIndex < QUESTIONS.length - 1) {
-        setQuestionIndex((q) => q + 1);
-      } else {
-        setPhase('final-question');
-      }
-    }, 2000);
-  }, [questionIndex]);
 
-  const handleFinalAnswer = (response: string) => {
-    setFinalAnswer(response);
-    setPhase('final-answer');
-    setTimeout(() => setPhase('kabini-door'), 5000);
-  };
 
   const bgStyle: React.CSSProperties = {
     position: 'relative',
@@ -1147,7 +1043,7 @@ const HealingGlassPage: React.FC = () => {
               className="btn-magic"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }}
               transition={{ delay: 13 }}
-              onClick={() => setPhase('questions')}
+              onClick={() => setPhase('story-question')}
               style={{ marginTop: '2.5rem', borderColor: '#ffd70088', color: '#ffd700' }}
             >
               Continue the Story ✨
@@ -1171,11 +1067,11 @@ const HealingGlassPage: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* ── PHASE: QUESTIONS ── */}
+      {/* ── PHASE: STORY QUESTION ── */}
       <AnimatePresence>
-        {phase === 'questions' && (
+        {phase === 'story-question' && (
           <motion.div
-            key="questions"
+            key="story-question"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             style={{
               position: 'relative', zIndex: 20,
@@ -1185,133 +1081,121 @@ const HealingGlassPage: React.FC = () => {
               padding: '2rem 1rem',
             }}
           >
-            <motion.h2
-              initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
-              style={{
-                fontFamily: 'var(--font-serif)',
-                fontSize: 'clamp(1.3rem, 3.5vw, 2rem)',
-                color: '#c8a8f0', textShadow: '0 0 15px #c8a8f0',
-                marginBottom: '2rem', textAlign: 'center',
-              }}
-            >
-              🃏 Fun Questions
-            </motion.h2>
+            <div style={{
+              maxWidth: 600, width: '100%',
+              background: 'rgba(20,10,40,0.6)',
+              border: '1px solid rgba(200,168,240,0.2)',
+              borderRadius: '1rem', padding: '2.5rem 1.5rem',
+              backdropFilter: 'blur(8px)',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+              maxHeight: '75vh', overflowY: 'auto',
+              scrollbarWidth: 'thin', scrollbarColor: 'rgba(200,168,240,0.3) transparent'
+            }}>
+              {STORY_QUESTION_TEXT.map((line, i) => (
+                <motion.p
+                  key={i}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-20px" }}
+                  transition={{ duration: 0.8, delay: i * 0.15 }}
+                  style={{
+                    fontFamily: 'var(--font-serif)',
+                    fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
+                    color: i === STORY_QUESTION_TEXT.length - 1 ? '#ffd700' : '#fff8dc',
+                    marginBottom: line === "" ? '1.5rem' : '1rem',
+                    lineHeight: 1.7, textAlign: 'center',
+                    fontStyle: 'italic',
+                    textShadow: i === STORY_QUESTION_TEXT.length - 1 ? '0 0 10px #ffd70044' : 'none',
+                  }}
+                >
+                  {line}
+                </motion.p>
+              ))}
+            </div>
 
-            {QUESTIONS.slice(0, questionIndex + 1).map((q, i) => (
-              <div key={i} style={{ marginBottom: '1.5rem' }}>
-                <QuestionCard
-                  q={q}
-                  index={i}
-                  onAnswer={i === questionIndex ? handleQuestionAnswered : () => {}}
-                />
-              </div>
-            ))}
+            <motion.button
+              className="btn-magic"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+              transition={{ delay: 3 }}
+              onClick={() => setPhase('story-butterfly')}
+              style={{ marginTop: '2.5rem', borderColor: '#c8a8f088', color: '#c8a8f0' }}
+            >
+              Continue Reading 🦋
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ── PHASE: FINAL QUESTION ── */}
+      {/* ── PHASE: STORY BUTTERFLY ── */}
       <AnimatePresence>
-        {phase === 'final-question' && (
+        {phase === 'story-butterfly' && (
           <motion.div
-            key="final-q"
+            key="story-butterfly"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             style={{
               position: 'relative', zIndex: 20,
               width: '100%', minHeight: '100vh',
               display: 'flex', flexDirection: 'column',
               alignItems: 'center', justifyContent: 'center',
-              padding: '2rem',
+              padding: '2rem 1rem',
             }}
           >
-            {/* Butterfly lands */}
-            <motion.div
-              initial={{ y: -100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ type: 'spring', damping: 15, delay: 0.5 }}
-              style={{ fontSize: '3.5rem', marginBottom: '2rem', filter: 'drop-shadow(0 0 15px #c8a8f0)' }}
-            >
-              🦋
-            </motion.div>
+            <div style={{
+              maxWidth: 680, width: '100%',
+              background: 'rgba(20,10,40,0.6)',
+              border: '1px solid rgba(200,168,240,0.2)',
+              borderRadius: '1rem', padding: '3rem 2rem',
+              backdropFilter: 'blur(8px)',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+              maxHeight: '80vh', overflowY: 'auto',
+              scrollbarWidth: 'thin', scrollbarColor: 'rgba(200,168,240,0.3) transparent'
+            }}>
+              {BUTTERFLY_STORY_TEXT.map((line, i) => {
+                const isHeading = line.startsWith('# ');
+                const text = isHeading ? line.replace('# ', '') : line;
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-20px" }}
+                    transition={{ duration: 0.8, delay: i * 0.05 }}
+                  >
+                    {isHeading ? (
+                      <h2 style={{
+                        fontFamily: 'var(--font-serif)',
+                        fontSize: 'clamp(1.5rem, 4vw, 2.2rem)',
+                        color: '#c8a8f0', textShadow: '0 0 15px #c8a8f0',
+                        marginBottom: '2rem', textAlign: 'center',
+                      }}>
+                        {text}
+                      </h2>
+                    ) : (
+                      <p style={{
+                        fontFamily: 'var(--font-serif)',
+                        fontSize: text === '🦋' ? '3rem' : 'clamp(1rem, 2.5vw, 1.25rem)',
+                        color: '#fff8dc',
+                        marginBottom: '1.2rem',
+                        lineHeight: 1.8, textAlign: text === '🦋' ? 'center' : 'left',
+                        fontStyle: 'italic',
+                      }}>
+                        {text}
+                      </p>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </div>
 
-            <TypewriterText text="One last question..." delay={1} style={{
-              fontSize: 'clamp(1rem, 2.5vw, 1.4rem)', color: '#fff8dc',
-              marginBottom: '0.5rem', fontStyle: 'italic',
-            }} />
-            <TypewriterText text="No pressure." delay={2.5} style={{
-              fontSize: 'clamp(0.85rem, 2vw, 1.1rem)', color: 'rgba(200,168,240,0.7)',
-              marginBottom: '0.3rem', fontStyle: 'italic',
-            }} />
-            <TypewriterText text="No right answer." delay={3.8} style={{
-              fontSize: 'clamp(0.85rem, 2vw, 1.1rem)', color: 'rgba(200,168,240,0.7)',
-              marginBottom: '2.5rem', fontStyle: 'italic',
-            }} />
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 5.5 }}
-              style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: 'min(420px, 90vw)' }}
+            <motion.button
+              className="btn-magic"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+              transition={{ delay: 2 }}
+              onClick={() => setPhase('kabini-door')}
+              style={{ marginTop: '2.5rem', borderColor: '#ffd70088', color: '#ffd700' }}
             >
-              {FINAL_OPTIONS.map((opt, i) => (
-                <motion.button
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 5.5 + i * 0.2 }}
-                  whileHover={{ scale: 1.03, x: 6, boxShadow: '0 0 20px rgba(200,168,240,0.3)' }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={() => handleFinalAnswer(opt.response)}
-                  style={{
-                    background: 'rgba(20,10,40,0.85)',
-                    border: '1px solid rgba(200,168,240,0.3)',
-                    borderRadius: '1rem', padding: '1rem 1.5rem',
-                    color: '#c8a8f0', fontFamily: 'var(--font-serif)',
-                    fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
-                    cursor: 'pointer', textAlign: 'left',
-                    backdropFilter: 'blur(8px)',
-                    transition: 'all 0.3s',
-                  }}
-                >
-                  {opt.label}
-                </motion.button>
-              ))}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ── PHASE: FINAL ANSWER ── */}
-      <AnimatePresence>
-        {phase === 'final-answer' && (
-          <motion.div
-            key="final-ans"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            style={{
-              position: 'relative', zIndex: 20,
-              display: 'flex', flexDirection: 'column',
-              alignItems: 'center', justifyContent: 'center',
-              minHeight: '100vh', padding: '3rem 2rem', textAlign: 'center',
-            }}
-          >
-            <motion.div
-              initial={{ y: 0 }} animate={{ y: -80, opacity: 0 }}
-              transition={{ delay: 3.5, duration: 1.5 }}
-              style={{ fontSize: '4rem', marginBottom: '2rem' }}
-            >
-              🦋
-            </motion.div>
-            <motion.p
-              initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5 }}
-              style={{
-                fontFamily: 'var(--font-serif)', fontStyle: 'italic',
-                fontSize: 'clamp(1rem, 2.5vw, 1.35rem)',
-                color: '#fff8dc', maxWidth: 480, lineHeight: 1.9,
-                textShadow: '0 0 15px rgba(255,248,220,0.3)',
-              }}
-            >
-              "{finalAnswer}"
-            </motion.p>
+              The Next Step ✨
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>
